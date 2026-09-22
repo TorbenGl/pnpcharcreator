@@ -333,10 +333,10 @@ const TALENTE = [
   {id:'faehrtenleser', name:'Fährtenleser', text:'+2 auf Überleben, wenn du eine Kreatur verfolgst.'},
   {id:'scharfschuetze', name:'Scharfschütze', text:'Ignoriert einen Teil der Entfernungsstrafe beim Schießen.'},
   {id:'hartgesotten', name:'Hartgesotten', text:'+2 auf Horror- und Angstproben.'},
-  {id:'okkultist', name:'Okkultist', text:'Du erkennst und deutest übernatürliche Spuren, Zeichen und Kreaturen. Setze es diskret ein — offen gezeigt weckt es Verdacht auf Hexerei.'},
+  {id:'okkultist', name:'Kundig der Sagen', text:'Du kennst die Werwolf-Sagen, Schutzzeichen und alten Rituale der Region. +2, um Volksglauben, Aberglauben und die Deutungen der Landleute einzuordnen — du weißt, was die Menschen glauben und wie man sie damit erreicht oder beruhigt. (Ob an den Sagen etwas Wahres ist, sagt das Talent nicht.) Setze es diskret ein — offen gezeigt weckt es Verdacht auf Hexerei.'},
   {id:'arzt', name:'Arzt', text:'Verbesserte Heilung: +2 auf Medizin, Verletzte erholen sich schneller.'},
   {id:'jaeger', name:'Jäger', text:'+2 auf Kampfwürfe gegen eine bekannte Monsterart (z.B. Wölfe / die Bestie).'},
-  {id:'silberkugel', name:'Silberkugel', text:'Einmal pro Szene zählt ein Treffer gegen eine übernatürliche Kreatur als Silbertreffer.'},
+  {id:'silberkugel', name:'Geweihte Silberkugel', text:'Du führst eine gesegnete Silberkugel bei dir — der Überlieferung nach das einzige Mittel gegen den loup-garou. Einmal pro Szene gibt dir der Glaube an ihre Kraft festen Mut: Neuwurf auf eine Angst- oder Willensprobe, und Verbündete in Rufweite fassen Zuversicht. Ob das Silber der Bestie mehr schadet als gewöhnliches Blei, hat noch niemand bewiesen.'},
   {id:'ortskundig', name:'Ortskundig', text:'+2 auf Überleben und Orientierung im Gévaudan; du kennst Pfade, Höhlen und Unterschlupf.'},
   {id:'anfuehrer', name:'Anführer', text:'Verbündete in Rufweite erhalten in angespannten Momenten +1 auf ihre Proben.'},
   {id:'ausweichen', name:'Ausweichen', text:'−2 auf Fernkampfangriffe gegen dich; du bist ein schwieriges Ziel.'},
@@ -402,7 +402,7 @@ const PRESETS = [
     profil:{wesenszuege:'einzelgängerisch, wachsam', motivation:'Der Wald ist sein Zuhause — er lässt sich nicht vertreiben.'} },
 
   { id:'pfarrer', name:'Pater Anselme', konzept:'Landpfarrer der verängstigten Gemeinde', kurz:'Fromm, standhaft, ein Fels im Sturm.',
-    stand:'Pfarrer', herkunftsort:'Malzieu',
+    stand:'Pfarrer', herkunftsort:'Le Malzieu',
     attribute:{kraft:'d4',geschick:'d6',zaehigkeit:'d6',verstand:'d8',willenskraft:'d10'},
     skills:{ueberreden:'d8',menschenkenntnis:'d6',okkultismus:'d8',wahrnehmung:'d6',fuehrung:'d4',medizin:'d4'},
     talente:['hartgesotten'],
@@ -419,14 +419,29 @@ const PRESETS = [
 ];
 
 /* ---------- Daten: Bestie ---------- */
+/* Jede Stufe trägt ZWEI Lesarten, die der SL nie ganz auflöst:
+   .text     = übernatürliche Deutung (der Geist des toten Sohnes, echte Verwandlung)
+   .nuechtern = nüchterne Deutung (Trauer-Psychose + Tollwut: Unruhe → Speichel/Schaum
+                → Hydrophobie → blinde Aggression → Tod) */
 const BESTIEN_STUFEN = [
-  {stufe:0, name:'Kontrolle', text:'Vollständig menschlich. Keine besonderen Effekte.'},
-  {stufe:1, name:'Instinkt', text:'Die Bestie regt sich: schärfere Sinne, gesteigerte Aufmerksamkeit, animalische Reflexe, kurze Impulse.'},
-  {stufe:2, name:'Raubtier', text:'Erste übernatürliche Vorteile: besserer Geruchssinn, Nachtsicht, gesteigerte Körperkraft, Fährten leichter verfolgbar.'},
-  {stufe:3, name:'Teilverwandlung', text:'Sichtbare Veränderung: Krallen, gelbe Augen, Fangzähne, übernatürliche Kraft, mehr Tempo. In manchen Lagen droht Kontrollverlust.'},
-  {stufe:4, name:'Bestie', text:'Kaum kontrollierbar. Starke Boni, aber die menschliche Kontrolle schwindet. Der SL verlangt Instinktproben und erzwingt Handlungen.'},
-  {stufe:5, name:'Vollständige Verwandlung', text:'Der Charakter wird zur Bestie; die menschliche Persönlichkeit tritt zurück — bis Sonnenaufgang oder ein bestimmtes Ereignis.'},
+  {stufe:0, name:'Kontrolle', text:'Vollständig menschlich. Keine besonderen Effekte.',
+    nuechtern:'Ein gesunder, klarer Mensch. Die Trauer ist da, aber noch beherrschbar; keine Krankheitszeichen.'},
+  {stufe:1, name:'Instinkt', text:'Die Bestie regt sich: schärfere Sinne, gesteigerte Aufmerksamkeit, animalische Reflexe, kurze Impulse.',
+    nuechtern:'Erste Zeichen: Unruhe, Reizbarkeit, Schlaflosigkeit, fahriger Blick. Eine Trauer, die nicht mehr loslässt — oder das Frühstadium einer Krankheit.'},
+  {stufe:2, name:'Raubtier', text:'Erste übernatürliche Vorteile: besserer Geruchssinn, Nachtsicht, gesteigerte Körperkraft, Fährten leichter verfolgbar.',
+    nuechtern:'Fieber, gesteigerter Speichelfluss, überwache Sinne, ruhelose Kraft. Frühe Tollwut treibt den Körper an — oder ein Wahn, der keine Erschöpfung mehr kennt.'},
+  {stufe:3, name:'Teilverwandlung', text:'Sichtbare Veränderung: Krallen, gelbe Augen, Fangzähne, übernatürliche Kraft, mehr Tempo. In manchen Lagen droht Kontrollverlust.',
+    nuechtern:'Sichtbarer Verfall: Schaum vor dem Mund, Krämpfe, wund gekratzte Haut, wirre Rede, das Kriechen auf allen vieren. Krankheit und Wahn zeigen sich nun offen.'},
+  {stufe:4, name:'Bestie', text:'Kaum kontrollierbar. Starke Boni, aber die menschliche Kontrolle schwindet. Der SL verlangt Instinktproben und erzwingt Handlungen.',
+    nuechtern:'Hydrophobie, blinde Aggression, Verlust der Sprache, kaum ansprechbar. Der Mensch verschwindet hinter Fieber und Raserei.'},
+  {stufe:5, name:'Vollständige Verwandlung', text:'Der Charakter wird zur Bestie; die menschliche Persönlichkeit tritt zurück — bis Sonnenaufgang oder ein bestimmtes Ereignis.',
+    nuechtern:'Endstadium: Delirium, Lähmung, Tod — oder ein Mensch, der nur noch wie ein Tier reagiert und nichts Menschliches mehr zeigt.'},
 ];
+/* Beide Lesarten einer Stufe, klar gelabelt (für Info-Boxen und Bogen). */
+function stufeBeideLesarten(i){
+  const st = BESTIEN_STUFEN[i] || BESTIEN_STUFEN[0];
+  return `<b>Übernatürlich:</b> ${esc(st.text)}<br><b>Nüchtern:</b> ${esc(st.nuechtern||'—')}`;
+}
 const BESTIENKRAEFTE = [
   {id:'klauen', name:'Klauen', abStufe:3, text:'Nahkampfangriff mit erhöhtem Schaden (Stärke +Würfel).'},
   {id:'biss', name:'Biss', abStufe:3, text:'Besonders hoher Schaden gegen ein einzelnes Ziel; kann den Fluch weitergeben.'},
@@ -467,7 +482,7 @@ let schritt = 0;
 function defaultCharacter(){
   return {
     schema:'gevaudan-character', version:1,
-    meta:{name:'',beiname:'',spieler:'',konzept:'',alter:'',herkunftsort:'',stand:'',konfession:'',sprachen:'',aussehen:'',
+    meta:{name:'',beiname:'',spieler:'',konzept:'',alter:'',herkunftsort:'',stand:'',konfession:'',sprachen:'',aussehen:'',grund:'',
           erstellt:new Date().toISOString(), geaendert:new Date().toISOString()},
     profil:{wesenszuege:'',tugend:'',laster:'',motivation:'',ziele:'',aengste:'',geheimnis:'',aberglaube:'',hintergrund:'',notizen:''},
     beziehungen:[],
@@ -481,27 +496,29 @@ function defaultCharacter(){
     verletzungen:{angeschlagen:false,wunden:0},
     bestie:{aktiv:false,instinkt:0,kraefte:[],
             silber:{ignoriertRegeneration:true,mehrSchaden:false,senktInstinkt:false,verhindertVerwandlung:false},
-            kontrolle:0,verwandlung:'',notizen:''},
+            kontrolle:0,verwandlung:'',lesart:'',notizen:''},
   };
 }
 
 function migrate(d){
+  d = d||{};
   const b = defaultCharacter();
-  const c = Object.assign(b, d||{});
-  c.meta   = Object.assign(b.meta,   d.meta||{});
-  c.profil = Object.assign(b.profil, d.profil||{});
-  c.attribute = Object.assign(b.attribute, d.attribute||{});
-  c.umwandlung = Object.assign(b.umwandlung, d.umwandlung||{});
-  c.verletzungen = Object.assign(b.verletzungen, d.verletzungen||{});
+  // Auf frische Defaults mergen (nicht auf b selbst), damit neu ergänzte Felder
+  // beim Laden alter Charaktere ihren Default behalten und additiv bleiben.
+  const c = Object.assign({}, b, d);
+  c.meta   = Object.assign({}, b.meta,   d.meta||{});
+  c.profil = Object.assign({}, b.profil, d.profil||{});
+  c.attribute = Object.assign({}, b.attribute, d.attribute||{});
+  c.umwandlung = Object.assign({}, b.umwandlung, d.umwandlung||{});
+  c.verletzungen = Object.assign({}, b.verletzungen, d.verletzungen||{});
   c.skills = d.skills||{};
   c.nachteile = d.nachteile||[];
   c.talente = d.talente||[];
   // Ausrüstung: alte String-Listen -> {name, menge}
   c.ausruestung = (d.ausruestung||[]).map(x => typeof x==='string' ? {name:x, menge:1} : {name:x.name, menge:x.menge||1}).filter(x=>x.name);
   c.beziehungen = d.beziehungen||[];
-  const bs = b.bestie;
-  c.bestie = Object.assign(bs, d.bestie||{});
-  c.bestie.silber = Object.assign(defaultCharacter().bestie.silber, (d.bestie&&d.bestie.silber)||{});
+  c.bestie = Object.assign({}, b.bestie, d.bestie||{});
+  c.bestie.silber = Object.assign({}, b.bestie.silber, (d.bestie&&d.bestie.silber)||{});
   c.bestie.kraefte = (d.bestie&&d.bestie.kraefte)||[];
   c.schema='gevaudan-character'; c.version=1;
   return c;
@@ -727,18 +744,21 @@ function sGrundlagen(){
 
 function sSetting(){
   return `<div class="panel">
-    <h2>Das Setting: Gévaudan, 1764–1767</h2>
-    <div class="lehr"><h4>Was wirklich geschah</h4>
-      In der abgelegenen Provinz <b>Gévaudan</b> (heute Lozère und Haute-Loire) fiel zwischen 1764 und 1767 eine bestienhafte Kreatur über die Menschen her — bevorzugt Frauen, Kinder und Hirt:innen auf den einsamen Weiden. Über hundert Tote wurden ihr zugeschrieben. König <b>Ludwig&nbsp;XV.</b> entsandte Jäger und Dragoner; Prämien wurden ausgesetzt, Wölfe zu Dutzenden erlegt — und doch ging das Sterben weiter.
+    <h2>Das Setting: Gévaudan, Winter 1764</h2>
+    <div class="lehr"><h4>Was geschieht</h4>
+      In der abgelegenen Hochlandprovinz <b>Gévaudan</b> (die kargen Berge der <b>Margeride</b>) zerreißt in diesem einen bitteren Winter etwas die Menschen auf dem offenen Moor — Kehlen aufgerissen, halb gefressen. Die Opfer sind fast immer die Armen: Frauen, Hirt:innen und Kinder, die die Herde hüten. Die Kirche nennt es Gottes Strafe, die Bauern flüstern „<b>loup-garou</b>", und die Krone will die Sache tot sehen, ehe die Panik das ganze Land ergreift. Kein Zeuge beschreibt das Untier gleich.
+    </div>
+    <div class="lehr"><h4>Der Ort: Le Malzieu</h4>
+      Basis ist die befestigte Kleinstadt <b>Le Malzieu</b> — Mauern, ein Tor, ein Gasthaus, eine Kirche, ein paar Honoratioren. Von hier strahlen alle Wege hinaus zu den Weilern, Weiden und Wäldern des Gévaudan. Der Syndic, der Dragonerhauptmann und der Pfarrer sind sich offen uneins, wie mit dem Grauen umzugehen ist. Man geht nicht mehr allein vor die Mauern.
     </div>
     <div class="lehr"><h4>Der Ton</h4>
-      Ländlicher Horror: neblige Wälder, tiefer Aberglaube, Kerzenlicht und Gebete. Die Obrigkeit ist fern, die Nächte sind lang. Ist die Bestie ein Wolf, ein abgerichtetes Tier — oder etwas, das die Gestalt wechselt?
+      Historischer Horror-Krimi: neblige Wälder, tiefe Armut, Frömmigkeit, die in Aberglauben kippt, Kerzenlicht und Gebete. Der Schrecken entsteht aus <b>Ungewissheit</b> — Wolf? Abgerichtetes Tier? Verfluchter Mensch? — nicht aus offenem Kampf. Erst wird ermittelt, dann gejagt.
     </div>
-    <div class="lehr"><h4>Eure Rolle</h4>
-      Ihr seid Menschen, die in den Strudel geraten: Jäger, Soldaten, Wilderer, Geistliche, Heilerinnen, Gelehrte, Hirt:innen. Ihr stellt euch der Bestie, schützt die Dörfer und sucht die Wahrheit hinter dem Grauen — mit Muskete, Verstand, Glaube und Mut.
+    <div class="lehr"><h4>Eure Rolle: Fremde im verängstigten Land</h4>
+      Ihr seid <b>Fremde</b>, die in diese Region gezogen sind, um einen Mörder zu jagen, den keine zwei Zeugen gleich beschreiben. Jäger, Soldaten, Wilderer, Geistliche, Heilerinnen, Gelehrte. Die Einheimischen misstrauen euch — ihr stellt euch der Bestie, schützt die Weiler und sucht die Wahrheit hinter dem Grauen, mit Muskete, Verstand, Glaube und Mut.
     </div>
     <div class="lehr"><h4>Aberglaube &amp; das Okkulte</h4>
-      Wissen über Flüche, alte Zeichen und das Übernatürliche kann Leben retten — aber <b>zeig es nicht offen</b>. Das Volk ist tief abergläubisch, die Kirche wachsam: Wer mit okkultem Wissen, Ritualen oder „heidnischen" Mitteln hantiert, gilt schnell als Hexe oder Ketzer. Solche Fähigkeiten (etwa die Fertigkeit <b>Okkultismus</b>) nutzt man <b>diskret</b> — hinter verschlossenen Türen, nicht auf dem Marktplatz.
+      Was das Volk glaubt, kann Leben retten oder kosten — aber <b>zeig dein Wissen nicht offen</b>. Man erzählt sich von verfluchten Männern, von Schutzzeichen und Ritualen; <b>der Überlieferung nach</b> beißt nur geweihtes <b>Silber</b> den loup-garou. Ob an alldem etwas Wahres ist, weiß niemand. Wer mit okkultem Wissen oder „heidnischen" Mitteln hantiert, gilt der wachsamen Kirche schnell als Hexe oder Ketzer — solche Fähigkeiten (etwa die Fertigkeit <b>Okkultismus</b>) nutzt man <b>diskret</b>.
     </div>
     <div class="nav">
       <button class="ghost" data-action="prev">← Zurück</button>
@@ -776,11 +796,14 @@ function sIdentitaet(){
       ${feld('Beiname / Ruf','meta.beiname',{ph:'„die Wölfin", „der Stumme" …'})}
       ${feld('Spieler:in','meta.spieler')}
       ${feld('Alter','meta.alter')}
-      ${feld('Herkunftsort / Dorf','meta.herkunftsort',{ph:'Saint-Chély, Malzieu, aus der Stadt …'})}
+      ${feld('Herkunftsort / Dorf','meta.herkunftsort',{ph:'aus Paris, Auvergne, der Stadt … (du bist fremd hier)'})}
       ${feld('Stand / Beruf','meta.stand',{ph:'Bäuerin, Dragoner, Pfarrer …'})}
       ${feld('Konfession / Glaube','meta.konfession',{ph:'fromm, zweifelnd, abergläubisch …'})}
       ${feld('Sprachen','meta.sprachen',{ph:'Okzitanisch, Französisch, Latein …'})}
     </div>
+    <div class="lehr" style="border-left-color:var(--blut2)"><h4>Du bist fremd hier</h4>
+      Die Spielercharaktere sind <b>Fremde</b>, die in das verängstigte Gévaudan gezogen sind, um die Bestie zu jagen. Halte fest, was dich ausgerechnet hierher, nach <b>Le Malzieu</b>, gebracht hat — das ist dein Aufhänger in der Geschichte.</div>
+    ${feld('Warum bist du hier?','meta.grund',{area:true,ph:'Königlicher Auftrag, eine Prämie, Buße, die Suche nach jemandem, ein Gerücht, das dich nicht losließ …'})}
     ${feld('Erscheinung','meta.aussehen',{area:true,ph:'Statur, Kleidung, Narben, Blick …'})}
     <div class="nav">
       <button class="ghost" data-action="prev">← Zurück</button>
@@ -973,7 +996,7 @@ function sAusruestung(){
   return `<div class="panel">
     <h2>Ausrüstung &amp; Feinschliff</h2>
     <div class="lehr"><h4>Was du bei dir trägst</h4>
-      Wähle typische Ausrüstung der Zeit oder ergänze eigene. <b>Silber</b> ist kostbar — es ist die einzige bekannte Waffe, die der Bestie wirklich schadet.</div>
+      Wähle typische Ausrüstung der Zeit oder ergänze eigene. <b>Silber</b> ist kostbar — <b>das Volk glaubt</b>, geweihte Silberkugeln seien das einzige Mittel, das dem loup-garou wirklich schadet. Bewiesen hat das niemand; doch der Glaube daran gibt Mut, und Mut hält im Dunkeln länger als eine ruhige Hand.</div>
     <p class="tip">Mit − und + legst du fest, <b>wie viele</b> du von einem Gegenstand trägst (z. B. mehrere Fackeln oder Silberkugeln).</p>
     <h3>Vorschläge</h3>
     <div class="grid g2" style="margin-bottom:14px">
@@ -1066,7 +1089,7 @@ function renderBogen(){
         <div class="meta">${esc(character.meta.konzept||'')}${character.meta.beiname?` · „${esc(character.meta.beiname)}"`:''}
           ${character.meta.stand?` · ${esc(character.meta.stand)}`:''}${character.meta.herkunftsort?` · ${esc(character.meta.herkunftsort)}`:''}</div>
       </div>
-      <div class="setting">Die Bestie von Gévaudan<br>Frankreich · 1764${character.meta.spieler?`<br>Spieler:in: ${esc(character.meta.spieler)}`:''}</div>
+      <div class="setting">Die Bestie von Gévaudan<br>Le Malzieu · Winter 1764${character.meta.spieler?`<br>Spieler:in: ${esc(character.meta.spieler)}`:''}</div>
     </div>
 
     <div class="cols">
@@ -1108,6 +1131,7 @@ function renderBogen(){
   const p = character.profil;
   const prof = [];
   if(character.meta.aussehen) prof.push(['Erscheinung',character.meta.aussehen]);
+  if(character.meta.grund) prof.push(['Warum bist du hier?',character.meta.grund]);
   if(p.wesenszuege) prof.push(['Wesenszüge',p.wesenszuege]);
   if(p.tugend||p.laster) prof.push(['Tugend / Laster',[p.tugend,p.laster].filter(Boolean).join(' · ')]);
   if(p.motivation) prof.push(['Motivation',p.motivation]);
@@ -1136,13 +1160,14 @@ function renderBogen(){
 function talentText(t){ const def=TALENTE.find(x=>x.id===t.id); return t.text||(def?def.text:''); }
 function bogenBestie(b){
   return `<div class="beast">
-    <h3 style="color:#7a2318">Die Bestie</h3>
-    <div class="prose"><b>${BESTIEN_STUFEN[b.instinkt].name}:</b> ${esc(BESTIEN_STUFEN[b.instinkt].text)}</div>
+    <h3 style="color:#7a2318">Die Bestie — ${esc(BESTIEN_STUFEN[b.instinkt].name)}</h3>
+    <div class="prose">${stufeBeideLesarten(b.instinkt)}</div>
     ${b.kraefte.length?`<h3 style="color:#7a2318">Bestienkräfte</h3><ul>${b.kraefte.map(k=>`<li><b>${esc(k.name)}</b> <span class="sub">— ${esc(kraftText(k))}</span></li>`).join('')}</ul>`:''}
-    <h3 style="color:#7a2318">Silber</h3>
+    <h3 style="color:#7a2318">Silber (Volksglaube)</h3>
     <div class="sub">${silberText(b.silber)}</div>
     ${b.kontrolle?`<div class="sub" style="margin-top:6px">Bestienkontrolle: ${b.kontrolle}</div>`:''}
     ${b.verwandlung?`<div class="prose" style="margin-top:6px"><b>Verwandlung:</b> ${esc(b.verwandlung)}</div>`:''}
+    ${b.lesart?`<div class="prose" style="margin-top:6px"><b>Lesart-Anker (SL):</b> ${esc(b.lesart)}</div>`:''}
     ${b.notizen?`<div class="prose" style="margin-top:6px">${esc(b.notizen)}</div>`:''}
   </div>`;
 }
@@ -1160,13 +1185,16 @@ function renderSL(){
   const b = character.bestie;
   return `<div class="panel">
     <h2>🐺 Bestien-Baumeister <span class="tip">(nur Spielleitung)</span></h2>
-    <div class="lehr"><h4>Wenn der Fluch übergreift</h4>
-      Lade den (menschlichen) Charakter eines Spielers und lege die Werwolf-Ebene darüber. Der bestehende Bogen bleibt erhalten — die Bestie kommt hinzu. Danach speichern/drucken und zurückgeben.</div>
+    <div class="lehr"><h4>Die Bestie und ihr Hüter — ein NSC, kein Spielercharakter</h4>
+      Hier baust du <b>das Untier und den Menschen, der es hegt und lenkt</b> — einen NSC, nicht die Figur eines Spielers. Jeder Wert und jede Notiz gehört auf die Seite der Spielleitung. Beginne mit dem <b>Vater-Preset</b> (dem empfohlenen Antagonisten), lege einen leeren Bestien-NSC an, oder lade einen bestehenden Bogen, um die Bestien-Ebene darüberzulegen. Danach speichern/drucken — die Notizen bleiben SL-Wissen.</div>
+    <div class="lehr" style="border-left-color:var(--gold)"><h4>Zwei Lesarten, nie ganz aufgelöst</h4>
+      Jede Instinkt-Stufe trägt zwei Deutungen: <b>übernatürlich</b> (der Geist des toten Sohnes lenkt den Wolf, echte Verwandlung) und <b>nüchtern</b> (Trauer-Psychose + Tollwut: Unruhe → Speichel/Schaum → Hydrophobie → blinde Aggression → Tod). Halte beide offen. Der <b>Lesart-Anker</b> unten notiert nur, welche Deutung die aktuelle Szene stützt.</div>
     <div class="btnrow">
+      <button class="prim" data-action="sl-vater">👤 Der Vater (Antagonist-Preset)</button>
+      <button data-action="sl-neu">Neuer Bestien-NSC</button>
       <button data-action="sl-import">⇧ Charakter laden (JSON/HTML)</button>
       <button data-action="sl-local">Aus diesem Browser laden</button>
       <button class="ghost" data-action="sl-paste-toggle">JSON einfügen</button>
-      <button class="ghost" data-action="sl-neu">Neuer Bestien-NSC</button>
     </div>
     <div id="sl-paste" style="display:none;margin-top:10px">
       <textarea id="sl-paste-ta" rows="4" placeholder="Charakter-JSON hier einfügen …"></textarea>
@@ -1184,7 +1212,7 @@ function renderSL(){
     <div class="instinkt-track">
       ${[0,1,2,3,4,5].map(i=>`<button class="${i===b.instinkt?'on':''}" data-action="sl-instinkt" data-wert="${i}">${i}</button>`).join('')}
     </div>
-    <div class="stufe-info"><b>${b.instinkt} · ${BESTIEN_STUFEN[b.instinkt].name}</b><br>${esc(BESTIEN_STUFEN[b.instinkt].text)}</div>
+    <div class="stufe-info"><b>${b.instinkt} · ${BESTIEN_STUFEN[b.instinkt].name}</b><br>${stufeBeideLesarten(b.instinkt)}</div>
     <h3 style="margin-top:16px">Auslöser (schnell am Tisch)</h3>
     <div class="ausloeser">
       ${AUSLOESER.map((a,i)=>`<button data-action="sl-ausloeser" data-wert="${a.wert}">${esc(a.name)} +${a.wert}</button>`).join('')}
@@ -1225,6 +1253,7 @@ function renderSL(){
         ${feld('Verwandlung — Dauer / Bedingung','bestie.verwandlung',{ph:'bis Sonnenaufgang, bis Blut fließt …'})}
       </div>
     </div>
+    ${feld('Lesart-Anker — welche Deutung stützt diese Szene?','bestie.lesart',{area:true,rows:2,ph:'z. B. „Diesmal wirkt es wie Tollwut: Schaum, Hydrophobie" oder „Der Wolf gehorchte seinem Namen — als wäre der Sohn darin". Beide Lesarten offenhalten.'})}
     ${feld('Notizen der Spielleitung','bestie.notizen',{area:true})}
   </div>
 
@@ -1342,6 +1371,7 @@ document.addEventListener('click', e=>{
     case 'sl-paste-toggle': { const p=document.getElementById('sl-paste'); p.style.display = p.style.display==='none'?'block':'none'; break; }
     case 'sl-paste-load': { try{ character=migrate(JSON.parse(document.getElementById('sl-paste-ta').value)); renderApp(); }catch(err){ alert('Ungültiges JSON.'); } break; }
     case 'sl-neu': if(confirm('Neuen Bestien-NSC anlegen?')){ character=defaultCharacter(); character.bestie.aktiv=true; renderApp(); } break;
+    case 'sl-vater': if(confirm('Den Vater (Antagonist-NSC) laden? Ein geladener Charakter wird ersetzt.')){ ladeVaterNSC(); } break;
     case 'sl-instinkt': character.bestie.instinkt=+D.wert; character.bestie.aktiv=true; touch(); renderApp(); break;
     case 'sl-ausloeser': character.bestie.instinkt=Math.max(0,Math.min(5,character.bestie.instinkt+ +D.wert)); character.bestie.aktiv=true; touch(); renderApp(); break;
     case 'sl-kraft': slToggleKraft(D.id); break;
@@ -1440,6 +1470,45 @@ function ladePreset(id){
   c.talente = (pre.talente||[]).map(tid=>{ const t=TALENTE.find(x=>x.id===tid); return {id:t.id,name:t.name,text:t.text}; });
   c.ausruestung = (pre.ausruestung||[]).map(([name,menge])=>({name, menge}));
   c.profil = Object.assign(c.profil, pre.profil||{});
+  character = c; schritt = SCHRITTE.findIndex(s=>s.id==='bogen'); touch(); autosave(); renderApp();
+}
+
+/* ---------- Vater-NSC (zentraler Antagonist, nur SL) ----------
+   Der Hüter der Bestie: ein trauernder Einheimischer, der den Wolf hegt und lenkt
+   und dabei selbst verfällt. Werte niedrig-menschlich, Willenskraft hoch. Alle
+   Profil-/Notizfelder sind bewusst AMBIVALENT — das Vater-Sohn-Geheimnis bleibt
+   SL-Wissen und wird nirgends als Fakt bestätigt. */
+function ladeVaterNSC(){
+  const c = defaultCharacter();
+  c.meta = Object.assign(c.meta, {
+    name:'Der Vater', beiname:'der Hirte, der nicht mehr spricht',
+    konzept:'Trauernder Einheimischer, der die Bestie hegt und lenkt',
+    alter:'alt vor der Zeit', herkunftsort:'ein Weiler bei Le Malzieu', stand:'Hirte / Jäger',
+    konfession:'einst fromm — jetzt betet er zu etwas anderem',
+    aussehen:'Ausgezehrt, verfilztes Haar, wunde Hände, ein Blick, der durch dich hindurchgeht. Manche schwören, seine Zähne stünden zu weit vor.'});
+  // niedrig-menschlich, Willenskraft hoch
+  c.attribute = {kraft:'d6',geschick:'d6',zaehigkeit:'d8',verstand:'d4',willenskraft:'d12'};
+  c.skills = {ueberleben:'d8',natur:'d8',heimlichkeit:'d6',wahrnehmung:'d6',einschuechtern:'d6',nahkampf:'d4'};
+  c.ausruestung = [{name:'Hirtenstab',menge:1},{name:'Jagdmesser',menge:1},{name:'Wildköder',menge:1},{name:'Wolldecke',menge:1}];
+  c.profil = Object.assign(c.profil, {
+    wesenszuege:'still, ausdauernd, unerreichbar hinter der Trauer',
+    motivation:'Er beschützt das Tier wie sein eigen Kind — koste es, was es wolle.',
+    aengste:'Dass man ihm das Tier nimmt. Ein zweites Mal.',
+    // bewusst doppeldeutig gehalten — SL löst es nie ganz auf:
+    geheimnis:'Sein Sohn (junger Hirte/Jäger) kam ums Leben. Seither ist er überzeugt, der Geist des Sohnes sei in den Wolf gefahren, den er beim Leichnam fand — ODER die Trauer hat ihn zerbrochen und eine Tollwut, die beide befallen hat, tut den Rest. Beide Lesarten offenhalten.',
+    hintergrund:'Er füttert das Tier, pflegt es, lenkt es zu den Opfern und wird selbst langsam „zum Wolf" (Haare, Zähne, Kriechen, Verlust der Sprache). Täter UND Opfer. Das Monster ist ein Tier; der wahre Antagonist ist ein sich auflösender Mensch. Den Wolf zu töten heißt womöglich, den Sohn ein zweites Mal zu töten.',
+    notizen:'SL-only. Vor Spielern nur als verstörter Einheimischer auftreten lassen.'});
+  c.beziehungen = [{name:'Der Wolf',beziehung:'„der Sohn" — das Tier, das er hegt und lenkt'},
+                   {name:'Der tote Sohn',beziehung:'Hirte/Jäger, umgekommen (Auslöser von allem)'}];
+  // Bestien-Ebene: mittlere Stufe, passende Kräfte
+  c.bestie.aktiv = true;
+  c.bestie.instinkt = 3;
+  c.bestie.kraefte = ['geruch','nachtsicht','rudel','staerke'].map(id=>{
+    const k = BESTIENKRAEFTE.find(x=>x.id===id); return {id:k.id,name:k.name,text:k.text};
+  });
+  c.bestie.verwandlung = 'schleichend über den Winter — kein Zurück in Sicht';
+  c.bestie.lesart = 'Offen halten: „Der Geist des Sohnes lenkt den Wolf" gegen „Trauer-Psychose + Tollwut bei Mann und Tier". Kein Hinweis bestätigt das eine allein.';
+  c.bestie.notizen = 'Der Vater ist der Hüter, nicht die Bestie selbst — die Bestie ist der Wolf, den er lenkt. Diese Bestien-Werte bilden seinen eigenen, langsamen Verfall ab.';
   character = c; schritt = SCHRITTE.findIndex(s=>s.id==='bogen'); touch(); autosave(); renderApp();
 }
 
