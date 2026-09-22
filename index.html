@@ -250,7 +250,7 @@
 /* ---------- Regel-Konstanten (leicht anpassbar) ---------- */
 const RULES = {
   START_WUERFEL: 'd4',
-  ATTRIBUT_STEIGERUNGEN: 5,   // Anzahl Würfel-Stufen, die verteilt werden
+  ATTRIBUT_STEIGERUNGEN: 7,   // Anzahl Würfel-Stufen, die verteilt werden
   SKILL_PUNKTE: 12,
   START_BENNIES: 3,
   GRATIS_TALENTE: 1,
@@ -340,7 +340,7 @@ const TALENTE = [
   {id:'ortskundig', name:'Ortskundig', text:'+2 auf Überleben und Orientierung im Gévaudan; du kennst Pfade, Höhlen und Unterschlupf.'},
   {id:'anfuehrer', name:'Anführer', text:'Verbündete in Rufweite erhalten in angespannten Momenten +1 auf ihre Proben.'},
   {id:'ausweichen', name:'Ausweichen', text:'−2 auf Fernkampfangriffe gegen dich; du bist ein schwieriges Ziel.'},
-  {id:'glueckspilz', name:'Glückspilz', text:'Du beginnst jede Sitzung mit 1 zusätzlichen Bennie (4 statt 3).'},
+  {id:'glueckspilz', name:'Glückspilz', text:'Du beginnst jede Sitzung mit 1 zusätzlichen Schicksalspunkt (4 statt 3).'},
   {id:'zaeh', name:'Zäh', text:'+1 auf deine Robustheit — du steckst mehr weg als andere.'},
 ];
 
@@ -349,6 +349,58 @@ const AUSRUESTUNG = [
   'Steinschlossmuskete','Reiterpistole','Jagdmesser','Handbeil / Axt','Spieß mit Bajonett','Mistgabel / Sense',
   'Silberkugeln','Silbernes Messer / Kruzifix','Pulver & Blei','Laterne','Rosenkranz','Wolfsfalle',
   'Reitpferd','Kräuter & Verbandszeug','Fernrohr','Warmer Mantel','Fackeln','Weihwasser',
+];
+
+/* ---------- Daten: Fertige Vorlagen (Presets / Blueprints) ---------- */
+/* Jeweils 7 Attribut-Steigerungen, 12 Fertigkeitspunkte, 1 Talent — budget-sauber. */
+const PRESETS = [
+  { id:'jaeger', name:'Antoine Chastel', konzept:'Wolfsjäger im Dienst des Königs', kurz:'Treffsicher, waldkundig, wortkarg.',
+    stand:'Wolfsjäger', herkunftsort:'Auvergne',
+    attribute:{kraft:'d6',geschick:'d10',zaehigkeit:'d6',verstand:'d8',willenskraft:'d4'},
+    skills:{schiessen:'d10',ueberleben:'d8',wahrnehmung:'d6',heimlichkeit:'d6',nahkampf:'d4'},
+    talente:['jaeger'],
+    ausruestung:[['Steinschlossmuskete',1],['Silberkugeln',6],['Jagdmesser',1],['Wolfsfalle',1],['Laterne',1]],
+    profil:{wesenszuege:'ruhig, geduldig, entschlossen', motivation:'Die Bestie erlegen, ehe sie weitere holt.'} },
+
+  { id:'dragoner', name:'Sergeant Lucas Ferrand', konzept:'Dragoner, zur Bestienjagd abkommandiert', kurz:'Diszipliniert, mutig, kampferprobt.',
+    stand:'Dragoner', herkunftsort:'Regiment de Clermont',
+    attribute:{kraft:'d8',geschick:'d6',zaehigkeit:'d8',verstand:'d6',willenskraft:'d6'},
+    skills:{nahkampf:'d8',schiessen:'d6',reiten:'d6',einschuechtern:'d6',athletik:'d6',wahrnehmung:'d4'},
+    talente:['anfuehrer'],
+    ausruestung:[['Steinschlossmuskete',1],['Reiterpistole',1],['Spieß mit Bajonett',1],['Reitpferd',1],['Warmer Mantel',1]],
+    profil:{wesenszuege:'pflichtbewusst, direkt', motivation:'Befehl ist Befehl — doch das hier ist etwas anderes.'} },
+
+  { id:'heilerin', name:'Marguerite Vialat', konzept:'Kräuterfrau und Heilerin', kurz:'Klug, mitfühlend, dem Volksglauben nah.',
+    stand:'Heilerin', herkunftsort:'Saint-Chély',
+    attribute:{kraft:'d4',geschick:'d6',zaehigkeit:'d6',verstand:'d10',willenskraft:'d8'},
+    skills:{medizin:'d10',natur:'d8',ueberleben:'d6',menschenkenntnis:'d6',ueberreden:'d4'},
+    talente:['arzt'],
+    ausruestung:[['Kräuter & Verbandszeug',2],['Laterne',1],['Rosenkranz',1],['Jagdmesser',1]],
+    profil:{wesenszuege:'warmherzig, beharrlich', motivation:'Niemand soll allein und unversorgt sterben.'} },
+
+  { id:'wilderer', name:'Rémy Fournier', konzept:'Wilderer, der jeden Pfad kennt', kurz:'Lautlos, misstrauisch, überlebensfähig.',
+    stand:'Wilderer', herkunftsort:'Wälder der Margeride',
+    attribute:{kraft:'d6',geschick:'d8',zaehigkeit:'d6',verstand:'d8',willenskraft:'d6'},
+    skills:{heimlichkeit:'d8',ueberleben:'d8',schiessen:'d6',wahrnehmung:'d6',fingerfertigkeit:'d4',natur:'d4'},
+    talente:['faehrtenleser'],
+    ausruestung:[['Steinschlossmuskete',1],['Wolfsfalle',2],['Jagdmesser',1],['Laterne',1]],
+    profil:{wesenszuege:'einzelgängerisch, wachsam', motivation:'Der Wald ist sein Zuhause — er lässt sich nicht vertreiben.'} },
+
+  { id:'pfarrer', name:'Pater Anselme', konzept:'Landpfarrer der verängstigten Gemeinde', kurz:'Fromm, standhaft, ein Fels im Sturm.',
+    stand:'Pfarrer', herkunftsort:'Malzieu',
+    attribute:{kraft:'d4',geschick:'d6',zaehigkeit:'d6',verstand:'d8',willenskraft:'d10'},
+    skills:{ueberreden:'d8',menschenkenntnis:'d6',okkultismus:'d8',wahrnehmung:'d6',fuehrung:'d4',medizin:'d4'},
+    talente:['hartgesotten'],
+    ausruestung:[['Rosenkranz',1],['Silbernes Messer / Kruzifix',1],['Weihwasser',1],['Laterne',1]],
+    profil:{wesenszuege:'ruhig, gütig, unerschütterlich', motivation:'Seine Herde durch die Finsternis führen.'} },
+
+  { id:'gelehrter', name:'Dr. Étienne Valmont', konzept:'Naturforscher aus der Stadt', kurz:'Scharfsinnig, neugierig, rational — noch.',
+    stand:'Naturforscher', herkunftsort:'Montpellier',
+    attribute:{kraft:'d6',geschick:'d6',zaehigkeit:'d6',verstand:'d10',willenskraft:'d6'},
+    skills:{ermittlung:'d8',wahrnehmung:'d8',okkultismus:'d6',natur:'d6',ueberreden:'d6'},
+    talente:['okkultist'],
+    ausruestung:[['Fernrohr',1],['Reiterpistole',1],['Kräuter & Verbandszeug',1],['Laterne',1]],
+    profil:{wesenszuege:'analytisch, skeptisch', motivation:'Die Wahrheit hinter der Bestie beweisen.'} },
 ];
 
 /* ---------- Daten: Bestie ---------- */
@@ -429,7 +481,8 @@ function migrate(d){
   c.skills = d.skills||{};
   c.nachteile = d.nachteile||[];
   c.talente = d.talente||[];
-  c.ausruestung = d.ausruestung||[];
+  // Ausrüstung: alte String-Listen -> {name, menge}
+  c.ausruestung = (d.ausruestung||[]).map(x => typeof x==='string' ? {name:x, menge:1} : {name:x.name, menge:x.menge||1}).filter(x=>x.name);
   c.beziehungen = d.beziehungen||[];
   const bs = b.bestie;
   c.bestie = Object.assign(bs, d.bestie||{});
@@ -593,8 +646,17 @@ function sWillkommen(){
       Über <b>💾 Speichern (HTML)</b> lädst du eine Datei mit deinem Charakter herunter. Öffnest du sie später, kannst du genau hier weiterbearbeiten. So schickst du deinen Charakter auch an die Spielleitung.
     </div>
     <div class="btnrow">
-      <button class="prim" data-action="next">Los geht's →</button>
-      <button class="ghost" data-action="beispiel">Beispielcharakter ansehen</button>
+      <button class="prim" data-action="next">Selbst erschaffen →</button>
+    </div>
+
+    <h3 style="margin-top:24px">Oder: fertige Vorlage wählen</h3>
+    <p class="lead">Keine Lust auf Regeln oder vom Editor überfordert? Wähle eine spielfertige Figur — Name und Details kannst du danach jederzeit anpassen.</p>
+    <div class="konzeptgrid">
+      ${PRESETS.map(p=>`<div class="konzept" data-action="preset" data-id="${p.id}">
+        <b>${esc(p.name)}</b><small>${esc(p.konzept)} — ${esc(p.kurz)}</small></div>`).join('')}
+    </div>
+    <div class="btnrow" style="margin-top:14px">
+      <button class="ghost" data-action="beispiel">Ausführliches Beispiel ansehen</button>
     </div>
   </div>`;
 }
@@ -614,21 +676,31 @@ function sGrundlagen(){
     </div>
     <div class="beispiel"><b>Beispiel:</b> Deine Schießen-Fertigkeit ist d8. Du würfelst d8 = <b>5</b> und Wild Die d6 = <b>3</b>. Es zählt die <b>5</b>.</div>
 
-    <div class="lehr"><h4>3 · Zielwert 4</h4>
+    <div class="lehr"><h4>3 · Explodierende Würfel</h4>
+      Zeigt ein Würfel sein <b>Höchstergebnis</b>, wird er <b>erneut geworfen und dazugezählt</b> — und das immer wieder, solange das Maximum fällt. So kann selbst ein kleiner Würfel einen gewaltigen Erfolg landen.
+    </div>
+    <div class="beispiel"><b>Beispiel:</b> Dein d8 zeigt <b>8</b> → also nochmal: <b>5</b>. Das Würfelergebnis ist 8 + 5 = <b>13</b>.</div>
+
+    <div class="lehr"><h4>4 · Zielwert 4</h4>
       Der Standard-Zielwert ist <b>4</b>. Wer 4 oder mehr erreicht, hat Erfolg. Schwierige Umstände geben Boni oder Abzüge (leicht +1/+2, schwierig −2, sehr schwierig −4).
     </div>
 
-    <div class="lehr"><h4>4 · Steigerungen (Raises)</h4>
+    <div class="lehr"><h4>5 · Steigerungen (Raises)</h4>
       Für je <b>4 Punkte über dem Zielwert</b> gelingt die Probe besonders gut — eine „Steigerung". Ergebnis 8 = 1 Steigerung, 12 = 2 Steigerungen: mehr Schaden, mehr Tempo, eine bessere Position.
     </div>
 
-    <div class="lehr"><h4>5 · Bennies</h4>
-      Du startest jede Sitzung mit <b>3 Bennies</b>. Damit kannst du einen Wurf <b>wiederholen</b>, <b>Schaden abwehren</b> — oder im Ernstfall <b>Kontrolle über die Bestie</b> zurückgewinnen. Setze sie mutig ein.
+    <div class="lehr"><h4>6 · Schicksalspunkte</h4>
+      Du startest jede Sitzung mit <b>3 Schicksalspunkten</b>. Damit kannst du einen Wurf <b>wiederholen</b>, <b>Schaden abwehren</b> oder <b>einen glücklichen Zufall</b> zu deinen Gunsten erzählen. Setze sie mutig ein — sie sind der Stoff, aus dem Held:innen überleben.
     </div>
 
-    <details class="mehr"><summary>Mehr Details: explodierende Würfel (optional)</summary>
-      <div class="body"><p>Klassisches Savage Worlds kennt „Asse": Zeigt ein Würfel sein Maximum, wird er erneut geworfen und addiert — theoretisch endlos. So kann selbst ein d4 einen Riesenerfolg landen. Ob deine Runde diese Regel nutzt, entscheidet die Spielleitung.</p></div>
-    </details>
+    <div class="lehr"><h4>7 · Wie Kampf funktioniert</h4>
+      <ul style="margin:.3em 0 0;padding-left:18px">
+        <li><b>Treffen:</b> Du greifst mit <b>Nahkampf</b> (im Handgemenge) oder <b>Schießen</b> (auf Distanz) an. Der Nahkampf muss die <b>Parade</b> des Ziels erreichen, ein Schuss meist die 4.</li>
+        <li><b>Schaden:</b> Bei einem Treffer würfelst du Schaden gegen die <b>Robustheit</b> des Ziels. Erreichst du sie, ist das Ziel <b>angeschlagen</b>; für je 4 darüber gibt es eine <b>Wunde</b> (−1 auf Proben je Wunde).</li>
+        <li><b>Angeschlagen:</b> Wer angeschlagen ist, muss sich erst wieder fangen, bevor er richtig handeln kann.</li>
+        <li><b>Held:innen bluffen dem Tod:</b> Mit einem <b>Schicksalspunkt</b> wiederholst du einen verpatzten Angriff oder wehrst eine Wunde ab.</li>
+      </ul>
+    </div>
 
     <div class="nav">
       <button class="ghost" data-action="prev">← Zurück</button>
@@ -647,7 +719,7 @@ function sSetting(){
       Ländlicher Horror: neblige Wälder, tiefer Aberglaube, Kerzenlicht und Gebete. Die Obrigkeit ist fern, die Nächte sind lang. Ist die Bestie ein Wolf, ein abgerichtetes Tier — oder etwas, das die Gestalt wechselt?
     </div>
     <div class="lehr"><h4>Eure Rolle</h4>
-      Ihr seid Menschen, die in den Strudel geraten: Jäger, Soldaten, Wilderer, Geistliche, Heilerinnen, Gelehrte, Hirt:innen. Ihr sucht die Bestie — und manche von euch könnten ihr näher kommen, als ihnen lieb ist. Denn ein Biss verändert alles. <span class="tip">(Diese Seite baut ganz normale Menschen. Was nach einem Biss geschieht, liegt in der Hand der Spielleitung.)</span>
+      Ihr seid Menschen, die in den Strudel geraten: Jäger, Soldaten, Wilderer, Geistliche, Heilerinnen, Gelehrte, Hirt:innen. Ihr stellt euch der Bestie, schützt die Dörfer und sucht die Wahrheit hinter dem Grauen — mit Muskete, Verstand, Glaube und Mut.
     </div>
     <div class="nav">
       <button class="ghost" data-action="prev">← Zurück</button>
@@ -704,6 +776,8 @@ function sAttribute(){
     <h2>Attribute</h2>
     <div class="lehr"><h4>Die fünf Grundwerte</h4>
       Alle Attribute beginnen bei <b>d4</b>. Du hast <b>${total} Steigerungen</b> — jede hebt ein Attribut um eine Würfelstufe (max. d12). Verteile sie nach dem Bild deiner Figur.</div>
+    <div class="lehr"><h4>Warum zuerst die Attribute?</h4>
+      Attribute sind das Fundament deiner Fertigkeiten: Eine Fertigkeit lässt sich <b>bis zur Höhe ihres Attributs günstig</b> steigern (1 Punkt je Stufe), <b>darüber kostet sie doppelt</b>. Ein starkes Attribut macht seine Fertigkeiten also billiger <i>und</i> stärker — plane die Attribute mit Blick auf die Fertigkeiten, die dir am wichtigsten sind.</div>
     ${budgetBar([{label:'Steigerungen',used,total,rest}])}
     ${rest<0?`<div class="banner bad">Du hast mehr Steigerungen verteilt, als du hast. Nimm irgendwo zurück.</div>`:''}
     ${ATTRIBUTE.map(a=>{
@@ -879,16 +953,28 @@ function sAusruestung(){
     <h2>Ausrüstung &amp; Feinschliff</h2>
     <div class="lehr"><h4>Was du bei dir trägst</h4>
       Wähle typische Ausrüstung der Zeit oder ergänze eigene. <b>Silber</b> ist kostbar — es ist die einzige bekannte Waffe, die der Bestie wirklich schadet.</div>
+    <p class="tip">Mit − und + legst du fest, <b>wie viele</b> du von einem Gegenstand trägst (z. B. mehrere Fackeln oder Silberkugeln).</p>
     <h3>Vorschläge</h3>
-    <div class="chips" style="margin-bottom:14px">
+    <div class="grid g2" style="margin-bottom:14px">
       ${AUSRUESTUNG.map(a=>{
-        const on = character.ausruestung.includes(a);
-        return `<span class="chip ${on?'on':''}" data-action="toggle-ausr" data-name="${esc(a)}">${on?'✓ ':''}${esc(a)}</span>`;
+        const m = ausrMenge(a);
+        return `<div class="steprow" style="margin-bottom:0">
+          <div class="nm"><b>${esc(a)}</b></div>
+          <button class="round" data-action="ausr-dec" data-name="${esc(a)}" ${m>0?'':'disabled'}>−</button>
+          <span class="die ${m?'':'untr'}" style="min-width:44px">${m?'×'+m:'—'}</span>
+          <button class="round" data-action="ausr-inc" data-name="${esc(a)}">+</button>
+        </div>`;
       }).join('')}
     </div>
-    ${character.ausruestung.filter(a=>!AUSRUESTUNG.includes(a)).length?`<h3>Eigenes</h3><div class="chips" style="margin-bottom:14px">
-      ${character.ausruestung.filter(a=>!AUSRUESTUNG.includes(a)).map(a=>`<span class="chip on">${esc(a)} <span class="x" data-action="ausr-remove" data-name="${esc(a)}">×</span></span>`).join('')}
-    </div>`:''}
+    ${(()=>{ const custom=character.ausruestung.filter(e=>!AUSRUESTUNG.some(a=>a===e.name));
+      return custom.length?`<h3>Eigenes</h3><div class="grid g2" style="margin-bottom:14px">
+        ${custom.map(e=>`<div class="steprow" style="margin-bottom:0">
+          <div class="nm"><b>${esc(e.name)}</b></div>
+          <button class="round" data-action="ausr-dec" data-name="${esc(e.name)}">−</button>
+          <span class="die" style="min-width:44px">×${e.menge}</span>
+          <button class="round" data-action="ausr-inc" data-name="${esc(e.name)}">+</button>
+        </div>`).join('')}
+      </div>`:''; })()}
     <div class="rel-row">
       <input type="text" id="ausr-neu" placeholder="Eigener Gegenstand …">
       <button data-action="ausr-add">+ Hinzufügen</button>
@@ -899,7 +985,7 @@ function sAusruestung(){
       <b>Parade ${d.parade}</b> = 2 + ½ Nahkampf (untrainiert zählt als d4). &nbsp;·&nbsp;
       <b>Robustheit ${d.robustheit}</b> = 2 + ½ Zähigkeit${character.talente.some(t=>t.id==='zaeh')?' + Zäh':''}. &nbsp;·&nbsp;
       <b>Bewegung ${d.bewegung}</b> Felder. &nbsp;·&nbsp;
-      <b>Bennies ${benniesAnzeige()}</b>${character.talente.some(t=>t.id==='glueckspilz')?' (inkl. Glückspilz)':''}.
+      <b>Schicksalspunkte ${benniesAnzeige()}</b>${character.talente.some(t=>t.id==='glueckspilz')?' (inkl. Glückspilz)':''}.
       <div class="tip" style="margin-top:6px">Die Spielleitung kann diese Formeln anpassen.</div>
     </div>
     <div class="nav">
@@ -972,7 +1058,7 @@ function renderBogen(){
           <div class="stat"><div class="l">Robustheit</div><div class="n">${d.robustheit}</div></div>
           <div class="stat"><div class="l">Bewegung</div><div class="n">${d.bewegung}</div></div>
         </div>
-        <h3>Bennies</h3>
+        <h3>Schicksalspunkte</h3>
         <div class="bennies">${'<span class="dot"></span>'.repeat(benniesAnzeige())} <span class="sub">(${benniesAnzeige()} pro Sitzung)</span></div>
         <h3>Verletzungen</h3>
         <div class="wounds"><span>Angeschlagen</span><span>Wunde −1</span><span>Wunde −2</span><span>Wunde −3</span><span>Bewusstlos</span></div>
@@ -985,16 +1071,16 @@ function renderBogen(){
         <h3>Nachteile</h3>
         <ul>${character.nachteile.map(n=>`<li><b>${esc(n.name)}</b> <span class="sub">(${n.schwere==='gross'?'groß':'klein'})</span></li>`).join('')||'<li class="sub">—</li>'}</ul>
         <h3>Ausrüstung</h3>
-        <div class="sub">${character.ausruestung.map(esc).join(' · ')||'—'}</div>
+        <div class="sub">${character.ausruestung.map(e=>esc(e.name)+(e.menge>1?` ×${e.menge}`:'')).join(' · ')||'—'}</div>
       </div>
     </div>
 
-    <h3>Bestieninstinkt</h3>
+    ${beastAktiv?`<h3>Bestieninstinkt</h3>
     <div class="instinkt">
-      ${[0,1,2,3,4,5].map(i=>`<div class="pip ${i<=b.instinkt&&(beastAktiv)?'on':''}">${i}</div>`).join('')}
-      <span class="sub">${beastAktiv?`Stufe ${b.instinkt}: ${BESTIEN_STUFEN[b.instinkt].name}`:'ruht — noch ganz Mensch'}</span>
+      ${[0,1,2,3,4,5].map(i=>`<div class="pip ${i<=b.instinkt?'on':''}">${i}</div>`).join('')}
+      <span class="sub">Stufe ${b.instinkt}: ${BESTIEN_STUFEN[b.instinkt].name}</span>
     </div>
-    ${beastAktiv?bogenBestie(b):''}
+    ${bogenBestie(b)}`:''}
   `;
 
   // Seite 2 – Profil
@@ -1194,6 +1280,7 @@ document.addEventListener('click', e=>{
     case 'prev': goto(schritt-1); break;
     case 'goto': goto(+D.i); break;
     case 'beispiel': ladeBeispiel(); break;
+    case 'preset': ladePreset(D.id); break;
     case 'konzept': character.meta.konzept = D.name; touch(); renderApp(); break;
 
     case 'attr-up': { const id=D.id, dd=character.attribute[id];
@@ -1217,10 +1304,10 @@ document.addEventListener('click', e=>{
     case 'rel-add': character.beziehungen.push({name:'',beziehung:''}); touch(); renderApp(); break;
     case 'rel-remove': character.beziehungen.splice(+D.i,1); touch(); renderApp(); break;
 
-    case 'toggle-ausr': toggleAusr(D.name); break;
+    case 'ausr-inc': ausrSet(D.name, ausrMenge(D.name)+1); touch(); renderApp(); break;
+    case 'ausr-dec': ausrSet(D.name, ausrMenge(D.name)-1); touch(); renderApp(); break;
     case 'ausr-add': { const inp=document.getElementById('ausr-neu'); const v=(inp.value||'').trim();
-      if(v && !character.ausruestung.includes(v)){ character.ausruestung.push(v); touch(); renderApp(); } break; }
-    case 'ausr-remove': character.ausruestung = character.ausruestung.filter(x=>x!==D.name); touch(); renderApp(); break;
+      if(v){ ausrSet(v, ausrMenge(v)+1); touch(); renderApp(); } break; }
 
     case 'print': renderBogen(); setTimeout(()=>window.print(),60); break;
     case 'save-html': speichernAlsHtml(); break;
@@ -1272,10 +1359,13 @@ function toggleTalent(id){
   else{ if(character.talente.length>=talentBudget()) return; character.talente.push({id:t.id,name:t.name,text:t.text}); }
   touch(); renderApp();
 }
-function toggleAusr(name){
-  if(character.ausruestung.includes(name)) character.ausruestung=character.ausruestung.filter(x=>x!==name);
-  else character.ausruestung.push(name);
-  touch(); renderApp();
+function ausrMenge(name){ const e=character.ausruestung.find(x=>x.name===name); return e?e.menge:0; }
+function ausrSet(name, menge){
+  menge = Math.max(0, menge);
+  const i = character.ausruestung.findIndex(x=>x.name===name);
+  if(menge===0){ if(i>=0) character.ausruestung.splice(i,1); }
+  else if(i>=0) character.ausruestung[i].menge = menge;
+  else character.ausruestung.push({name, menge});
 }
 function slToggleKraft(id){
   const k = BESTIENKRAEFTE.find(x=>x.id===id); if(!k) return;
@@ -1302,7 +1392,7 @@ function ladeBeispiel(){
   c.meta = Object.assign(c.meta,{name:'Jeanne Mercier',beiname:'die Wölfin',spieler:'',konzept:'Wilderin, die die Bestie jagt',
     alter:'27',herkunftsort:'Saint-Chély',stand:'Wilderin',konfession:'abergläubisch fromm',sprachen:'Okzitanisch, Französisch',
     aussehen:'Hager, wettergegerbt, ein Wolfszahn an einer Lederschnur. Wache graue Augen.'});
-  c.attribute={kraft:'d6',geschick:'d8',zaehigkeit:'d6',verstand:'d6',willenskraft:'d4'}; // 5 Steigerungen (1+2+1+1+0)
+  c.attribute={kraft:'d6',geschick:'d8',zaehigkeit:'d8',verstand:'d6',willenskraft:'d6'}; // 7 Steigerungen (1+2+2+1+1)
   c.nachteile=[{id:'gejagt',name:'Gejagt',schwere:'gross',text:NACHTEILE.find(n=>n.id==='gejagt').text},
                {id:'aberglaube',name:'Aberglaube',schwere:'klein',text:NACHTEILE.find(n=>n.id==='aberglaube').text}];
   c.umwandlung={attribut:0,talente:1,skills:1}; // 3 Nachteil-Punkte: 1 Talent(2) + 1 Skillpunkt(1)
@@ -1310,12 +1400,25 @@ function ladeBeispiel(){
   c.skills={schiessen:'d8',heimlichkeit:'d6',ueberleben:'d6',wahrnehmung:'d6',nahkampf:'d4',natur:'d6',reiten:'d4'};
   c.talente=[{id:'faehrtenleser',name:'Fährtenleser',text:TALENTE.find(t=>t.id==='faehrtenleser').text},
              {id:'jaeger',name:'Jäger',text:TALENTE.find(t=>t.id==='jaeger').text}];
-  c.ausruestung=['Steinschlossmuskete','Jagdmesser','Silberkugeln','Wolfsfalle','Laterne'];
+  c.ausruestung=[{name:'Steinschlossmuskete',menge:1},{name:'Jagdmesser',menge:1},{name:'Silberkugeln',menge:6},{name:'Wolfsfalle',menge:1},{name:'Laterne',menge:1}];
   c.profil=Object.assign(c.profil,{wesenszuege:'zäh, wortkarg, loyal',tugend:'Mut',laster:'Rachsucht',
     motivation:'Die Bestie tötete ihre Schwester. Sie wird nicht ruhen.',ziele:'Den Kopf der Bestie über die Türschwelle nageln.',
-    aengste:'Selbst zur Bestie zu werden.',geheimnis:'Ein Biss an ihrem Bein will nicht heilen …',
+    aengste:'Die Nächte, in denen das Heulen näher kommt.',geheimnis:'In jener Nacht ließ sie ihre Schwester aus Angst allein — sie gibt sich die Schuld.',
     hintergrund:'Aufgewachsen in den Wäldern der Margeride, lebte Jeanne vom Wildern, bis die Bestie kam.'});
   c.beziehungen=[{name:'Marie',beziehung:'tote Schwester (Opfer der Bestie)'},{name:'Pater Anselme',beziehung:'misstrauischer Verbündeter'}];
+  character = c; schritt = SCHRITTE.findIndex(s=>s.id==='bogen'); touch(); autosave(); renderApp();
+}
+
+/* ---------- Fertige Vorlage laden ---------- */
+function ladePreset(id){
+  const pre = PRESETS.find(p=>p.id===id); if(!pre) return;
+  const c = defaultCharacter();
+  c.meta = Object.assign(c.meta, {name:pre.name, konzept:pre.konzept, stand:pre.stand||'', herkunftsort:pre.herkunftsort||''});
+  c.attribute = Object.assign(c.attribute, pre.attribute);
+  c.skills = Object.assign({}, pre.skills);
+  c.talente = (pre.talente||[]).map(tid=>{ const t=TALENTE.find(x=>x.id===tid); return {id:t.id,name:t.name,text:t.text}; });
+  c.ausruestung = (pre.ausruestung||[]).map(([name,menge])=>({name, menge}));
+  c.profil = Object.assign(c.profil, pre.profil||{});
   character = c; schritt = SCHRITTE.findIndex(s=>s.id==='bogen'); touch(); autosave(); renderApp();
 }
 

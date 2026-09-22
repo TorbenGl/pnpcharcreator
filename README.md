@@ -20,7 +20,8 @@ Alles steckt in `index.html` — **keine Installation, keine Server, offline nut
      kannst du **weiterbearbeiten**. So schickst du deinen Charakter auch an die Spielleitung.
    - **⇩ Als JSON exportieren** – schlankes Austauschformat (z. B. für den Bestien-Baumeister).
 
-> Tipp zum Ausprobieren: Auf der Willkommensseite gibt es **„Beispielcharakter ansehen"**.
+> Tipp: Auf der Willkommensseite kannst du auch eine **fertige Vorlage** wählen (spielfertige Figur,
+> falls dich der Editor überfordert) oder das **ausführliche Beispiel** ansehen.
 
 ## An die Spieler verschicken
 
@@ -61,8 +62,9 @@ ergänzen → als PDF/HTML zurückgeben.
 - **Würfelstufen:** d4 → d6 → d8 → d10 → d12.
 - **Probe:** Fertigkeits-Würfel + **Wild Die (d6)**, höheres Ergebnis; **Zielwert 4**.
   Je 4 Punkte darüber = eine **Steigerung**.
-- **Erschaffung:** alle Attribute starten bei d4, **5 Attribut-Steigerungen**, **12 Fertigkeitspunkte**
-  (1 Punkt/Stufe bis zur Höhe des Attributs, darüber 2), **1 Talent** gratis, **3 Bennies**.
+- **Explodierende Würfel:** zeigt ein Würfel sein Maximum, neu würfeln und addieren (ggf. mehrfach).
+- **Erschaffung:** alle Attribute starten bei d4, **7 Attribut-Steigerungen**, **12 Fertigkeitspunkte**
+  (1 Punkt/Stufe bis zur Höhe des Attributs, darüber 2), **1 Talent** gratis, **3 Schicksalspunkte**.
 - **Nachteile:** bis 1 großer (2 Punkte) + 2 kleine (je 1) — eintauschbar in Attribut (2), Talent (2)
   oder Fertigkeitspunkt (1).
 - **Abgeleitet:** Parade = 2 + ½ Nahkampf · Robustheit = 2 + ½ Zähigkeit · Bewegung = 6.
