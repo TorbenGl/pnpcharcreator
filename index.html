@@ -333,7 +333,7 @@ const TALENTE = [
   {id:'faehrtenleser', name:'Fährtenleser', text:'+2 auf Überleben, wenn du eine Kreatur verfolgst.'},
   {id:'scharfschuetze', name:'Scharfschütze', text:'Ignoriert einen Teil der Entfernungsstrafe beim Schießen.'},
   {id:'hartgesotten', name:'Hartgesotten', text:'+2 auf Horror- und Angstproben.'},
-  {id:'okkultist', name:'Okkultist', text:'Du erkennst und deutest übernatürliche Spuren, Zeichen und Kreaturen.'},
+  {id:'okkultist', name:'Okkultist', text:'Du erkennst und deutest übernatürliche Spuren, Zeichen und Kreaturen. Setze es diskret ein — offen gezeigt weckt es Verdacht auf Hexerei.'},
   {id:'arzt', name:'Arzt', text:'Verbesserte Heilung: +2 auf Medizin, Verletzte erholen sich schneller.'},
   {id:'jaeger', name:'Jäger', text:'+2 auf Kampfwürfe gegen eine bekannte Monsterart (z.B. Wölfe / die Bestie).'},
   {id:'silberkugel', name:'Silberkugel', text:'Einmal pro Szene zählt ein Treffer gegen eine übernatürliche Kreatur als Silbertreffer.'},
@@ -346,9 +346,24 @@ const TALENTE = [
 
 /* ---------- Daten: Ausrüstungs-Vorschläge (1760er) ---------- */
 const AUSRUESTUNG = [
-  'Steinschlossmuskete','Reiterpistole','Jagdmesser','Handbeil / Axt','Spieß mit Bajonett','Mistgabel / Sense',
-  'Silberkugeln','Silbernes Messer / Kruzifix','Pulver & Blei','Laterne','Rosenkranz','Wolfsfalle',
-  'Reitpferd','Kräuter & Verbandszeug','Fernrohr','Warmer Mantel','Fackeln','Weihwasser',
+  // Feuerwaffen & Zubehör
+  'Steinschlossmuskete','Jagdflinte','Reiterpistole','Pulver & Blei','Pulverhorn','Ersatz-Feuerstein','Silberkugeln',
+  // Nahkampf
+  'Säbel','Degen','Jagdmesser','Dolch','Handbeil / Axt','Spieß mit Bajonett','Mistgabel / Sense','Knüppel / Keule','Armbrust',
+  // Glaube & Schutz
+  'Silbernes Messer / Kruzifix','Rosenkranz','Weihwasser','Bibel','Amulett / Talisman','Salz & Knoblauch',
+  // Licht & Feuer
+  'Laterne','Fackeln','Zunderbüchse','Kerzen',
+  // Jagd & Fährte
+  'Wolfsfalle','Wildköder','Jagdhund','Hirtenstab','Fernrohr',
+  // Reise & Überleben
+  'Reitpferd','Warmer Mantel','Reiseumhang mit Kapuze','Wolldecke','Zeltplane','Seil (15 m)','Kletterhaken','Proviant (Brot & Käse)','Wasserschlauch','Branntwein',
+  // Wissen & Werkzeug
+  'Kompass','Karte des Gévaudan','Notizbuch & Schreibzeug','Werkzeugtasche',
+  // Medizin
+  'Kräuter & Verbandszeug','Aderlass-Set','Laudanum (Opiumtinktur)',
+  // Sonstiges
+  'Geldbeutel (Livres)','Tabakspfeife',
 ];
 
 /* ---------- Daten: Fertige Vorlagen (Presets / Blueprints) ---------- */
@@ -669,6 +684,7 @@ function sGrundlagen(){
     <div class="lehr"><h4>1 · Würfelstufen</h4>
       Alles — Attribute wie Fertigkeiten — wird durch einen Würfel dargestellt. Je größer der Würfel, desto besser:
       <p style="text-align:center;font-size:1.2rem;color:var(--gold2);margin:.5em 0">d4 → d6 → d8 → d10 → d12</p>
+      <div>Die Würfelstufe ist die <b>Bewertung</b> deiner Figur — <b>kein einmaliges Auswürfeln</b>. Bei der Erschaffung <b>verteilst</b> du diese Stufen mit Punkten; nichts wird zufällig bestimmt. Gewürfelt wird erst <b>im Spiel</b>: Dann wirfst du genau diesen Würfel (plus den Wild Die) und vergleichst mit dem Zielwert. <b>Attribute</b> beginnen bei <b>d4</b>, <b>Fertigkeiten</b> beginnen „<b>untrainiert</b>" (noch kein Würfel) und werden mit Punkten auf d4 und höher gebracht.</div>
     </div>
 
     <div class="lehr"><h4>2 · Die Probe</h4>
@@ -720,6 +736,9 @@ function sSetting(){
     </div>
     <div class="lehr"><h4>Eure Rolle</h4>
       Ihr seid Menschen, die in den Strudel geraten: Jäger, Soldaten, Wilderer, Geistliche, Heilerinnen, Gelehrte, Hirt:innen. Ihr stellt euch der Bestie, schützt die Dörfer und sucht die Wahrheit hinter dem Grauen — mit Muskete, Verstand, Glaube und Mut.
+    </div>
+    <div class="lehr"><h4>Aberglaube &amp; das Okkulte</h4>
+      Wissen über Flüche, alte Zeichen und das Übernatürliche kann Leben retten — aber <b>zeig es nicht offen</b>. Das Volk ist tief abergläubisch, die Kirche wachsam: Wer mit okkultem Wissen, Ritualen oder „heidnischen" Mitteln hantiert, gilt schnell als Hexe oder Ketzer. Solche Fähigkeiten (etwa die Fertigkeit <b>Okkultismus</b>) nutzt man <b>diskret</b> — hinter verschlossenen Türen, nicht auf dem Marktplatz.
     </div>
     <div class="nav">
       <button class="ghost" data-action="prev">← Zurück</button>
@@ -853,6 +872,8 @@ function sSkills(){
     <div class="lehr"><h4>Was du gelernt hast</h4>
       Jede Fertigkeit hängt an einem Attribut. <b>Bis zur Höhe des Attributs</b> kostet jede Stufe <b>1 Punkt</b>, <b>darüber 2 Punkte</b>. Du hast <b>${total} Punkte</b>.</div>
     <div class="beispiel">Geschick d8, Schießen bis d8 → je Stufe 1 Punkt. Der Schritt auf d10 (über dem Attribut) kostet dann 2.</div>
+    <div class="lehr" style="border-left-color:var(--blut2)"><h4>Vorsicht: Okkultismus</h4>
+      Okkultes Wissen ist selten und heikel. Offen gezeigt weckt es Verdacht auf Hexerei — die Fertigkeit <b>Okkultismus</b> setzt man im Spiel besser <b>diskret</b> ein.</div>
     ${budgetBar([{label:'Fertigkeitspunkte',used,total,rest}])}
     ${rest<0?`<div class="banner bad">Zu viele Punkte ausgegeben — reduziere Fertigkeiten (oder erhöhe das passende Attribut).</div>`:''}`;
   ATTRIBUTE.forEach(a=>{
